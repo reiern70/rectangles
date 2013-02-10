@@ -12,19 +12,19 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.validator.RangeValidator;
 
 import com.odobo.domain.Rectangle;
 import com.odobo.services.IRectanglesService;
-import com.odobo.services.impl.RectanglesService;
 
 public class RectanglesPage extends WebPage {
 	private static final long serialVersionUID = 1L;
 
 	private Integer numberOfRectangles = 5;
 	
-	//TODO: use dependency injection.
-	private static IRectanglesService rectanglesService = new RectanglesService();
+	@SpringBean
+	private IRectanglesService rectanglesService;
 	
 	private Collection<Rectangle> rectangles = new ArrayList<Rectangle>();
 	
@@ -101,5 +101,13 @@ public class RectanglesPage extends WebPage {
 
 	public void setNumberOfRectangles(Integer numberOfRectangles) {
 		this.numberOfRectangles = numberOfRectangles;
+	}
+
+	public IRectanglesService getRectanglesService() {
+		return rectanglesService;
+	}
+
+	public void setRectanglesService(IRectanglesService rectanglesService) {
+		this.rectanglesService = rectanglesService;
 	}
 }

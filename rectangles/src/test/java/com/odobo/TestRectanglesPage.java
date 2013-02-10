@@ -4,8 +4,8 @@ import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.odobo.web.RectanglesPage;
 import com.odobo.web.RectanglesApplication;
+import com.odobo.web.rectangle.RectanglesPage;
 
 /**
  * Simple test using the WicketTester

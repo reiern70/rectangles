@@ -14,7 +14,7 @@ import com.odobo.domain.Rectangle;
  */
 public interface IRectanglesService {
 
-	public String getRandomHorizontalyAdjacentRectanglesAsJSON(Collection<Rectangle> rectangles);
+	public String getRectanglesAsJSON(Collection<Rectangle> rectangles);
 	
 	/**
 	 * Generates a random number of horizontally adjacent rectangles.

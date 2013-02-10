@@ -1,16 +1,13 @@
-package com.odobo.web;
+package com.odobo.web.rectangle;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.repeater.RepeatingView;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.validator.RangeValidator;
@@ -52,48 +49,30 @@ public class RectanglesPage extends WebPage {
 				
     }
 	
+	@SuppressWarnings("serial")
 	@Override
 	protected void onBeforeRender() {
 		super.onBeforeRender();
-		
-		RepeatingView randomRectangles = new RepeatingView("randomRectangles");
-		
-		int posX = 40;
-		int posY = 300;
-				
-		for(Rectangle rectangle: rectangles) {
-			WebMarkupContainer wm = new WebMarkupContainer(randomRectangles.newChildId());	
-			StringBuilder builder = new StringBuilder();
-			builder.append("position:absolute; border: 1px solid black;");
-			builder.append("left:"+(posX+rectangle.getX())+"px;");
-			builder.append("top:"+(posY+rectangle.getY())+"px;");
-			builder.append("width:"+(rectangle.getWidth())+"px;");
-			builder.append("height:"+(rectangle.getHeight())+"px;");
-			wm.add(new AttributeModifier("style", Model.of(builder.toString())));
-			randomRectangles.add(wm);
+						
+		addOrReplace(new RectanglesPanel("randomRectangles", new ResourceModel("randomHorizontal")) {
 			
-		}
-		addOrReplace(randomRectangles);	
+			@Override
+			protected Collection<Rectangle> getRectangles() {
+				return rectangles;
+			}
+		});
 		
-		
-		RepeatingView hrandomRectangles = new RepeatingView("hrandomRectangles");
-		
-		posY = 600;
-				
-		for(Rectangle rectangle: hrectangles) {
-			WebMarkupContainer wm = new WebMarkupContainer(randomRectangles.newChildId());	
-			StringBuilder builder = new StringBuilder();
-			builder.append("position:absolute; border: 1px solid black;");
-			builder.append("left:"+(posX+rectangle.getX())+"px;");
-			builder.append("top:"+(posY+rectangle.getY())+"px;");
-			builder.append("width:"+(rectangle.getWidth())+"px;");
-			builder.append("height:"+(rectangle.getHeight())+"px;");
-			wm.add(new AttributeModifier("style", Model.of(builder.toString())));
-			hrandomRectangles.add(wm);
+		addOrReplace(new RectanglesPanel("hrandomRectangles", new ResourceModel("hrandomRectangles")) {
 			
-		}
-		addOrReplace(hrandomRectangles);	
+			@Override
+			protected Collection<Rectangle> getRectangles() {
+				return hrectangles;
+			}
+		});
+
+					
 	}
+	
 
 	public Integer getNumberOfRectangles() {
 		return numberOfRectangles;

@@ -90,15 +90,14 @@ public class RectanglesService implements IRectanglesService {
 	}
 
 	@Override
-	public String getRandomHorizontalyAdjacentRectanglesAsJSON(
+	public String getRectanglesAsJSON(
 			Collection<Rectangle> rectangles) {
-		Collection<Rectangle> hRectangles = getMinimumNumberOfHorizontalRectangles(rectangles);
 		//TODO: for real application use a JSON producing library.
 		StringBuilder builder = new StringBuilder();
 		builder.append("{");	
-		Rectangle.writeProperty(builder, "numRects", hRectangles.size());
+		Rectangle.writeProperty(builder, "numRects", rectangles.size());
 		builder.append(", \"sourceRectangles\": [");
-		for(Rectangle rectangle: hRectangles) {
+		for(Rectangle rectangle: rectangles) {
 			builder.append(rectangle.toJSON());
 			builder.append(",");
 		}

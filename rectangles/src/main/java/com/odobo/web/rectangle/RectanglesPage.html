@@ -7,23 +7,16 @@
 		<link rel="stylesheet" href="style.css" type="text/css" media="screen" title="Stylesheet" />
 	</head>
 	<body>
-		<form wicket:id="form">
-			<label>Enter the number of rectangles</label>
+		<form wicket:id="form" class="Form">
+			<label><wicket:message key="question"/></label>
 			<input wicket:id="numberOfRectangles"/>
-			<input type="submit" value="generate rectangles"/>
+			<input type="submit" wicket:message="value:generate"/>
 		</form>
-		<div>Random Rectangles</div>
-		<div>
-			<div wicket:id="randomRectangles" style="">
-				
-			</div>
+		
+		<div wicket:id="randomRectangles" style="">				
 		</div>
 		
-		<div>Horizontal Rectangles</div>
-		<div>
-			<div wicket:id="hrandomRectangles" style="">
-				
-			</div>
-		</div>
+		<div wicket:id="hrandomRectangles" style="">				
+		</div>		
 	</body>
 </html>

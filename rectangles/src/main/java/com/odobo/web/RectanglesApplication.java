@@ -1,7 +1,9 @@
 package com.odobo.web;
 
+import org.apache.wicket.injection.Injector;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -32,6 +34,12 @@ public class RectanglesApplication extends WebApplication
 		super.init();
 
 		applicationContext = new ContextLoader().loadContext();
+		
+		getComponentInstantiationListeners().add(
+				new SpringComponentInjector(this, applicationContext));
+
+		Injector.get().inject(this);
+
 	}
 
 	public static ApplicationContext getApplicationContext() {

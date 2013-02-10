@@ -14,6 +14,6 @@ public class ContextLoader implements org.springframework.test.context.ContextLo
 	}
 
 	public ApplicationContext loadContext(String... locations) {
-		return new AnnotationConfigApplicationContext(ApplicationContext.class);
+		return new AnnotationConfigApplicationContext(com.odobo.web.ApplicationContext.class);
 	}
 }

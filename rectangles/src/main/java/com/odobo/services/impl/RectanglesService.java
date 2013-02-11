@@ -9,6 +9,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
+import java.util.TreeSet;
 
 import com.odobo.domain.Rectangle;
 import com.odobo.services.IRectanglesService;
@@ -58,36 +60,54 @@ public class RectanglesService implements IRectanglesService {
 			
 			@Override
 			public int compare(Rectangle o1, Rectangle o2) {
-				return new Integer(o1.getHeight()).compareTo(o2.getHeight());
+				if(o1.getHeight() != o2.getHeight()) {
+					return new Integer(o1.getHeight()).compareTo(o2.getHeight());
+				} else {
+					return new Integer(o1.getX()).compareTo(o2.getX());
+				}
 			}
 		});
-		Rectangle previous = null;
-		for(Rectangle rectangle: sortedByHeight) {
-			hrectangles.add(computeRectangle(rectangle, previous, rectangles));
-			previous = rectangle;	
+		
+		Collection<Integer> heights = getHeights(sortedByHeight);
+		System.out.println(heights);
+		int width = getMaxWidth(sortedByHeight);
+		System.out.println(width);		
+		int y = 0;
+		for(Integer height: heights) {
+			Rectangle hrectange = new Rectangle(0, y, width, height-y);			
+			Collection<Rectangle> intersection = hrectange.intersectionWith(rectangles);
+			hrectangles.addAll(intersection);
+			y = height;
 		}
 		return hrectangles;
 	}
 	
-	private Rectangle computeRectangle(Rectangle hrectangle, Rectangle previous, Collection<Rectangle> rectangles) {
-		int x = 0;
-		int width = 0;
-		// find x coordinate of horizontal
+	/**
+	 * 
+	 * @param rectangles
+	 * @return
+	 */
+	private Collection<Integer> getHeights(Iterable<Rectangle> rectangles) {
+		Set<Integer> integers = new TreeSet<Integer>();
 		for(Rectangle rectangle: rectangles) {
-			if(rectangle.getHeight() >= hrectangle.getHeight()) {
-				x = rectangle.getX();
-				break;
-			}			
-		}		
-		for(Rectangle rectangle: rectangles) {
-			if(rectangle.getHeight() >= hrectangle.getHeight()) {
-				width += rectangle.getWidth();
-			}
+			integers.add(rectangle.getHeight());
 		}
-		int pHeight = previous!= null?previous.getHeight():0;
-		return new Rectangle(x, previous!= null?(previous.getY()+previous.getHeight()+1):0, width, hrectangle.getHeight()-pHeight);
-		
+		return integers;
 	}
+	
+	/**
+	 * 
+	 * @param rectangles
+	 * @return
+	 */
+	private int getMaxWidth(Iterable<Rectangle> rectangles) {
+		int width = 0;
+		for(Rectangle rectangle: rectangles) {
+			width += rectangle.getWidth();
+		}
+		return width;
+	}
+
 
 	@Override
 	public String getRectanglesAsJSON(

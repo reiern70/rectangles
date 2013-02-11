@@ -69,9 +69,7 @@ public class RectanglesService implements IRectanglesService {
 		});
 		
 		Collection<Integer> heights = getHeights(sortedByHeight);
-		System.out.println(heights);
 		int width = getMaxWidth(sortedByHeight);
-		System.out.println(width);		
 		int y = 0;
 		for(Integer height: heights) {
 			Rectangle hrectange = new Rectangle(0, y, width, height-y);			
